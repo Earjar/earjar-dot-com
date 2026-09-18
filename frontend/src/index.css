@@ -1,0 +1,345 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* primary */
+  --color-nguni: #66371fff;
+  --color-lush: #16A34A;
+  --color-bone: #EDE7DC;
+
+  /* secondary */
+  --color-umnyama: #1B1B1B;
+  --color-hazy: #26567c;
+  --color-khala: #2C4F3C;
+
+  /* tertiary */
+  --color-ash: #2A2A2A;
+  --color-indigo_bloom: #3B4D61;
+  --color-chalk: #F4F4F4;
+  --color-oled: #987332;
+  --color-ambers: #E2B55A;
+}
+
+:root {
+  /* primary */
+  --color-nguni: #66371fff;
+  --color-lush: #16A34A;
+  --color-bone: #EDE7DC;
+
+  /* secondary */
+  --color-umnyama: #1B1B1B;
+  --color-hazy: #26567c;
+  --color-khala: #2C4F3C;
+
+  /* tertiary */
+  --color-ash: #2A2A2A;
+  --color-indigo_bloom: #3B4D61;
+  --color-chalk: #F4F4F4;
+  --color-oled: #987332;
+  --color-ambers: #E2B55A;
+}
+
+a {
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+a:hover {
+  font-weight: 600;
+}
+
+body {
+  background: #0F0F0F;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+
+h1,
+h2,
+h3,
+button {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.cassette-label {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+h1 {
+  line-height: 1.1;
+}
+
+button {
+  cursor: pointer;
+  font-weight: 400;
+  transition: background-color 0.1s ease, transform 0.1s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: scale(1.03);
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Custom Scrollbar Styles */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3B4D61 #0a0a0a;
+}
+
+/* For Webkit browsers (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #0F0F0F;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #3B4D61;
+  border-radius: 6px;
+  border: 2px solid #0F0F0F;
+  /* Creates padding effect */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #5BA4CF;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: #7c3aed;
+}
+
+/* For horizontal scrollbars */
+*::-webkit-scrollbar-corner {
+  background: #0F0F0F;
+}
+
+@keyframes breathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.010);
+  }
+}
+
+.animate-breathe {
+  animation: breathe 8s ease-in-out infinite;
+}
+
+/* word glitch */
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glitch-text::before {
+  color: var(--color-hazy);
+  animation: glitch-1 6s infinite;
+}
+
+.glitch-text::after {
+  color: var(--color-oled);
+  animation: glitch-2 6.5s infinite;
+}
+
+.glitch-char {
+  display: inline-block;
+  animation: char-break 6s infinite;
+}
+
+@keyframes char-break {
+
+  0%,
+  90%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  91% {
+    transform: translate(-2px, -3px) rotate(-4deg);
+  }
+
+  92.5% {
+    transform: translate(3px, 2px) rotate(3deg);
+  }
+
+  94% {
+    transform: translate(-2px, 3px) rotate(-2deg);
+  }
+
+  95.5% {
+    transform: translate(1px, -2px) rotate(2deg);
+  }
+
+  97% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes glitch-1 {
+
+  0%,
+  92%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+    clip-path: inset(0 0 0 0);
+  }
+
+  93% {
+    opacity: 0.8;
+    transform: translate(-2px, 1px);
+    clip-path: inset(10% 0 60% 0);
+  }
+
+  94.5% {
+    opacity: 0.8;
+    transform: translate(2px, -1px);
+    clip-path: inset(55% 0 15% 0);
+  }
+
+  96% {
+    opacity: 0;
+    transform: translate(0, 0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes glitch-2 {
+
+  0%,
+  90%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+    clip-path: inset(0 0 0 0);
+  }
+
+  91% {
+    opacity: 0.8;
+    transform: translate(2px, -1px);
+    clip-path: inset(65% 0 5% 0);
+  }
+
+  92.5% {
+    opacity: 0.8;
+    transform: translate(-2px, 1px);
+    clip-path: inset(5% 0 70% 0);
+  }
+
+  94% {
+    opacity: 0;
+    transform: translate(0, 0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* trippy background */
+
+.trippy-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #ede7dcf5;
+}
+
+/* Main floating blobs */
+.trippy-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle 250px at 15% 20%,
+      rgba(101, 253, 0, 0.55) 0%,
+      rgba(255, 255, 255, 0.15) 40%,
+      transparent 75%),
+
+    radial-gradient(circle 350px at 85% 25%,
+      rgba(247, 0, 0, 0.212) 0%,
+      rgba(0, 0, 0, 0.04) 45%,
+      transparent 75%),
+
+    radial-gradient(circle 300px at 30% 80%,
+      rgba(255, 255, 255, 0.40) 0%,
+      rgba(255, 255, 255, 0.12) 45%,
+      transparent 80%),
+
+    radial-gradient(circle 280px at 80% 75%,
+      rgba(0, 0, 0, 0.08) 0%,
+      rgba(0, 0, 0, 0.03) 45%,
+      transparent 80%),
+
+    radial-gradient(circle 400px at 50% 50%,
+      rgba(59, 10, 10, 0.178) 0%,
+      transparent 85%);
+
+  filter: blur(40px);
+
+  animation:
+    trippyFloat 24s ease-in-out infinite alternate,
+    trippyRotate 120s linear infinite;
+}
+
+@keyframes trippyFloat {
+  0% {
+    transform: translate(-4%, -2%) scale(1);
+  }
+
+  25% {
+    transform: translate(3%, -4%) scale(1.04);
+  }
+
+  50% {
+    transform: translate(6%, 3%) scale(1.08);
+  }
+
+  75% {
+    transform: translate(-2%, 6%) scale(1.03);
+  }
+
+  100% {
+    transform: translate(-6%, -3%) scale(1);
+  }
+}
+
+@keyframes trippyRotate {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}

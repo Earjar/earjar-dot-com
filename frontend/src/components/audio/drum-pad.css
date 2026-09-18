@@ -1,0 +1,42 @@
+/* my crop out picture */
+.animate-crop-wiggle {
+  animation: crop-wiggle 2.4s ease-in-out infinite;
+}
+@keyframes crop-wiggle {
+
+  0%,
+  100% {
+    rotate: -25deg;
+  }
+
+  20% {
+    rotate: -33deg;
+  }
+
+  35% {
+    rotate: -33deg;
+  }
+
+  65% {
+    rotate: -17deg;
+  }
+
+  80% {
+    rotate: -17deg;
+  }
+}
+
+
+/* the control panel */
+.hinge-panel {
+    transform-origin: top right;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hinge-closed {
+    transform: rotate(0deg);
+}
+
+.hinge-open {
+    transform: rotate(-70deg);
+}

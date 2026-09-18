@@ -1,0 +1,49 @@
+.audio-wave-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--color-ambers) 55%, transparent));
+}
+
+.audio-wave-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 10px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--color-ambers), var(--color-lush));
+  transform-origin: 50% 0%;
+  transform: rotate(var(--rot)) translateY(-18px) scaleY(0.4);
+  animation: audio-wave-pulse 2000ms ease-in-out infinite;
+}
+
+@keyframes audio-wave-pulse {
+
+  0%,
+  100% {
+    transform: rotate(var(--rot)) translateY(-18px) scaleY(0.4);
+  }
+
+  50% {
+    transform: rotate(var(--rot)) translateY(-18px) scaleY(1.4);
+  }
+}
+
+.audio-wave-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  pointer-events: none;
+  width: calc(16px - var(--t) * 1.8px);
+  height: calc(16px - var(--t) * 1.8px);
+  border-radius: 50%;
+  background: var(--trail-color);
+  opacity: calc(0.75 - var(--t) * 0.11);
+  filter: blur(1.5px);
+}
