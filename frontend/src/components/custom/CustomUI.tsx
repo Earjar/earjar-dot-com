@@ -46,7 +46,7 @@ export const DarkSeperator = () => (
     <div className="h-px w-full bg-gradient-to-r from-umnyama/15 via-umnyama/30 to-umnyama/15" />
 );
 export const LightSeperator = () => (
-    <div className="h-px w-full bg-gradient-to-r from-bone/15 via-bone/30 to-bone/15" />
+    <div className="h-px w-full bg-gradient-to-r from-umnyama/15 via-umnyama/30 to-bonumnyamae/15 my-2" />
 );
 export const FaintLightSeperator = () => (
     <div className="h-px w-full bg-gradient-to-r from-bone/20 via-bone/5 to-transparent" />
