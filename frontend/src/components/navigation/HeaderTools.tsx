@@ -17,7 +17,7 @@ const HeaderTools = () => {
 
     const links = [
         { id: 1, label: "Home", action: () => navigate("/home"), active: location === "/home" },
-        { id: 1, label: "Products", action: () => navigate("/products"), active: location === "/products" },
+        // { id: 1, label: "Products", action: () => navigate("/products"), active: location === "/products" },
     ];
 
     return (

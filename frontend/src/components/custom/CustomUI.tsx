@@ -18,7 +18,7 @@ export const MainHeaderDark: React.FC<MainHeaderProps> = ({ title }) => (
     <h1 className="text-lg md:text-2xl font-light text-umnyama">{title}</h1>
 );
 export const GlitchedHeader: React.FC<MainHeaderProps> = ({ title, glitchedWord }) => (
-    <h1 className="text-2xl md:text-7xl font-light text-umnyama">
+    <h1 className="text-2xl md:text-6xl font-light text-umnyama">
         {title}{" "}
         {glitchedWord && (
             <span className="glitch-text" data-text={glitchedWord}>

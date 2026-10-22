@@ -12,7 +12,7 @@ const Footer = () => {
             }}
             className="mx-auto mt-16 flex flex-col items-center gap-6 text-center text-bone px-4 py-4 bg-lush w-full"
         >
-            <p className="text-xs">Earjar is a South African audio software/hardware startup based in Cape Town.</p>
+            <p className="text-xs">EARJAR Pty Ltd is a South African audio tech startup founded in 2025.</p>
         </motion.div>
     )
 };

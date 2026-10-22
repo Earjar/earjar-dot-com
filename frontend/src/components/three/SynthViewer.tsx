@@ -4,11 +4,10 @@ import { useFrame } from "@react-three/fiber";
 import { ContactShadows, Environment, Lightformer, View } from "@react-three/drei";
 import FitCamera from "./FitCamera.tsx";
 import SynthModel from "./SynthModel.tsx";
-import { brandColor, type BrandColor } from "../../styling/palette.ts";
+import { brandColor } from "../../styling/palette.ts";
 
 type SynthViewerProps = {
     url: string;
-    accent: BrandColor;
     // the section the viewer lives in; its scroll position drives the model's rotation
     sectionRef: React.RefObject<HTMLElement | null>;
 };
@@ -17,7 +16,7 @@ type SynthViewerProps = {
 const CAMERA_DIRECTION: [number, number, number] = [0, 0.55, 1];
 const CAMERA_TARGET: [number, number, number] = [0, 0.25, 0];
 
-const SynthViewer: React.FC<SynthViewerProps> = ({ url, accent, sectionRef }) => {
+const SynthViewer: React.FC<SynthViewerProps> = ({ url, sectionRef }) => {
     const dragRef = useRef({ active: false, lastX: 0, offset: 0 });
 
     // horizontal drag spins the model; touch-action pan-y keeps vertical page scrolling working on mobile
@@ -44,8 +43,8 @@ const SynthViewer: React.FC<SynthViewerProps> = ({ url, accent, sectionRef }) =>
         >
             <View className="absolute inset-0">
                 <FitCamera width={3.9} height={2.4} direction={CAMERA_DIRECTION} target={CAMERA_TARGET} />
-                <SynthStage accent={accent} sectionRef={sectionRef} dragRef={dragRef}>
-                    <Suspense fallback={<LoadingBox accent={accent} />}>
+                <SynthStage sectionRef={sectionRef} dragRef={dragRef}>
+                    <Suspense fallback={<LoadingBox />}>
                         <SynthModel url={url} />
                     </Suspense>
                 </SynthStage>
@@ -55,12 +54,11 @@ const SynthViewer: React.FC<SynthViewerProps> = ({ url, accent, sectionRef }) =>
 };
 
 type SynthStageProps = {
-    accent: BrandColor;
     sectionRef: React.RefObject<HTMLElement | null>;
     dragRef: React.RefObject<{ offset: number }>;
     children: React.ReactNode;
 };
-const SynthStage: React.FC<SynthStageProps> = ({ accent, sectionRef, dragRef, children }) => {
+const SynthStage: React.FC<SynthStageProps> = ({ sectionRef, dragRef, children }) => {
     const turntable = useRef<THREE.Group>(null);
 
     useFrame((state, delta) => {
@@ -84,7 +82,7 @@ const SynthStage: React.FC<SynthStageProps> = ({ accent, sectionRef, dragRef, ch
         <>
             <ambientLight intensity={0.6} />
             <directionalLight position={[3, 5, 2]} intensity={1.6} />
-            <pointLight position={[-3, 1.5, -2]} intensity={8} color={brandColor(accent)} />
+            <pointLight position={[-3, 1.5, -2]} intensity={8} color={brandColor("lush")} />
             {/* studio lighting built from local light panels, so no HDR file has to be downloaded */}
             <Environment resolution={256}>
                 <Lightformer intensity={2} position={[0, 4, 0]} rotation-x={Math.PI / 2} scale={[8, 8, 1]} />
@@ -99,7 +97,7 @@ const SynthStage: React.FC<SynthStageProps> = ({ accent, sectionRef, dragRef, ch
     );
 };
 
-const LoadingBox: React.FC<{ accent: BrandColor }> = ({ accent }) => {
+const LoadingBox = () => {
     const ref = useRef<THREE.Mesh>(null);
     useFrame((_, delta) => {
         if (ref.current) ref.current.rotation.y += delta;
@@ -107,7 +105,7 @@ const LoadingBox: React.FC<{ accent: BrandColor }> = ({ accent }) => {
     return (
         <mesh ref={ref} position={[0, 0.3, 0]}>
             <boxGeometry args={[2.4, 0.4, 1.4]} />
-            <meshBasicMaterial color={brandColor(accent)} wireframe />
+            <meshBasicMaterial color={brandColor("lush")} wireframe />
         </mesh>
     );
 };
