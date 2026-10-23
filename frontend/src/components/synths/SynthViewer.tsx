@@ -23,14 +23,20 @@ export const synths: Synth[] = [
             { label: "Presets", value: "50+" },
             { label: "Synthesis", value: "Digital" },
         ],
-        price: "R150.00"
+        price: "TBA"
     },
 ];
+const reveal = {
+    initial: { opacity: 0, y: 50 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.5 },
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
+};
 
 const SynthViewer = () => {
 
     return (
-        <div>
+        <motion.div {...reveal}>
             {synths.map((synth: Synth) => (
                 <section className="w-full flex items-center justify-between gap-4">
                     <motion.div className={`md:col-span-2 flex flex-col gap-2 `}>
@@ -57,7 +63,7 @@ const SynthViewer = () => {
 
                 </section>
             ))}
-        </div>
+        </motion.div>
     )
 }
 export default SynthViewer

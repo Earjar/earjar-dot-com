@@ -16,8 +16,7 @@ const HeaderTools = () => {
     ];
 
     const links = [
-        { id: 1, label: "Home", action: () => navigate("/home"), active: location === "/home" },
-        // { id: 1, label: "Products", action: () => navigate("/products"), active: location === "/products" },
+        { id: 1, label: "Home", action: () => navigate("/home"), active: location === "/home" }
     ];
 
     return (
@@ -31,7 +30,7 @@ const HeaderTools = () => {
                 {/* Top bar */}
                 <div className="w-full flex items-center justify-between">
                     {/* logo */}
-                    <div className="w-20 h-15 mr-0 md:mr-6">
+                    <div className="w-25 h-25 mr-0 md:mr-6">
                         <img src="/images/logo.png" className="w-full h-full" />
                     </div>
 

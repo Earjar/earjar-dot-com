@@ -17,6 +17,9 @@ export const MainHeaderLight: React.FC<MainHeaderProps> = ({ title }) => (
 export const MainHeaderDark: React.FC<MainHeaderProps> = ({ title }) => (
     <h1 className="text-lg md:text-2xl font-light text-umnyama">{title}</h1>
 );
+export const MainHeader: React.FC<MainHeaderProps> = ({ title }) => (
+    <h1 className="text-lg md:text-xl font-light text-nguni uppercase tracking-wide">{title}</h1>
+);
 export const GlitchedHeader: React.FC<MainHeaderProps> = ({ title, glitchedWord }) => (
     <h1 className="text-2xl md:text-6xl font-light text-umnyama">
         {title}{" "}
@@ -46,10 +49,56 @@ export const DarkSeperator = () => (
     <div className="h-px w-full bg-gradient-to-r from-umnyama/15 via-umnyama/30 to-umnyama/15" />
 );
 export const LightSeperator = () => (
-    <div className="h-px w-full bg-gradient-to-r from-umnyama/15 via-umnyama/30 to-bonumnyamae/15 my-2" />
+    <div className="h-px w-full bg-gradient-to-r from-umnyama/15 via-umnyama/30 to-bone/15 my-2" />
 );
 export const FaintLightSeperator = () => (
     <div className="h-px w-full bg-gradient-to-r from-bone/20 via-bone/5 to-transparent" />
+);
+
+// legal
+/*
+ * Inline links inside legal prose.
+ *
+ * index.css sets `a { text-decoration: none; font-weight: 500 }` and
+ * `a:hover { font-weight: 600 }` as unlayered CSS after `@import "tailwindcss"`.
+ * Unlayered declarations beat everything in Tailwind's utilities layer whatever
+ * their specificity, so plain `underline` and `font-medium` here would simply
+ * lose: the links would not be underlined, and the hover weight change would
+ * reflow the paragraph mid-sentence. Hence the `!` overrides, and a weight
+ * pinned on both states so the text cannot shift.
+ */
+export const legalLinkClass =
+    "text-hazy underline! font-medium! decoration-umnyama/40 hover:decoration-umnyama";
+
+const slugify = (value: string) =>
+    value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+interface LegalClauseProps {
+    index: number;
+    heading: string;
+    body?: string;
+    bullets?: string[];
+    children?: React.ReactNode;
+};
+/*
+ * One numbered clause of a policy or terms page. Clauses are numbered and given
+ * an id so they can be cited and linked to directly, e.g. /terms#governing-law.
+ * `children` carries anything needing markup, such as an inline link, which a
+ * plain `body` string cannot express.
+ */
+export const LegalClause: React.FC<LegalClauseProps> = ({ index, heading, body, bullets, children }) => (
+    <div id={slugify(heading)} className="flex flex-col gap-2 scroll-mt-24">
+        <h2 className="text-base font-bold text-umnyama">{index}. {heading}</h2>
+        {body && <p className="text-sm text-umnyama/80 leading-relaxed">{body}</p>}
+        {bullets && (
+            <ul className="list-disc pl-5 flex flex-col gap-1">
+                {bullets.map((bullet) => (
+                    <li key={bullet} className="text-sm text-umnyama/80 leading-relaxed">{bullet}</li>
+                ))}
+            </ul>
+        )}
+        {children}
+    </div>
 );
 
 // inputs
