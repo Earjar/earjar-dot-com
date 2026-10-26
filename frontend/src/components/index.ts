@@ -7,9 +7,10 @@ export { default as Footer } from "./navigation/Footer.tsx";
 
 // synths
 export { default as SynthViewer } from "./synths/SynthViewer.tsx"
+
 // custom
 export * as CustomUI from "./custom/CustomUI.tsx";
-export { default as AudioWaveCursor } from "./custom/AudioWaveCursor.tsx";
+export * as CustomLoaders from "./custom/CustomLoaders.tsx";
  
 // wrapper
 export { default as ParentWrapper } from "./wrappers/ParentWrapper.tsx";

@@ -30,7 +30,7 @@ const HeaderTools = () => {
                 {/* Top bar */}
                 <div className="w-full flex items-center justify-between">
                     {/* logo */}
-                    <div className="w-25 h-25 mr-0 md:mr-6">
+                    <div className="w-20 h-20 mr-0 md:mr-6">
                         <img src="/images/logo.png" className="w-full h-full" />
                     </div>
 

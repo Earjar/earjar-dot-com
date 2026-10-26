@@ -48,12 +48,10 @@ const AboutSection = () => {
     )
 };
 const SynthSection = () => (
-    <section id="synths" className="pl-4 w-full flex flex-col scroll-mt-4 gap-4">
+    <section id="synths" className="pl-4 w-full flex flex-col scroll-mt-4 gap-8">
         <motion.div {...reveal} className="flex flex-col gap-1">
             <CustomUI.MainHeaderDark title="Plugins & Vst's" />
-            <CustomUI.SubHeader title="Scroll to turn them, drag to spin them." />
         </motion.div>
-
         <SynthViewer />
     </section>
 );
