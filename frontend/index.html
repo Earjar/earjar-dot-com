@@ -1,10 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-ZA">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/images/logo-filled.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Earjar: Proudly South African Audio Tech for Producers, Engineers & Music Enthusiasts</title>
+
+    <!--
+      Icons live at the site root on fresh filenames. Google caches favicons by URL, so reusing
+      /images/logo-filled.png would have kept serving the stale cached icon. /favicon.ico also
+      needs to be a real file: vercel.json rewrites /(.*) to /, so without it that path returns
+      index.html as HTML 200 rather than a 404.
+    -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#2a7b48" />
+
+    <title>Earjar: Proudly South African Audio Tech for Producers, Engineers &amp; Music Enthusiasts</title>
+    <meta
+      name="description"
+      content="Earjar is a South African audio tech company building plugins, VSTs and tools for producers, engineers and music enthusiasts. Bringing the funk back to music."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Earjar" />
+    <meta property="og:title" content="Earjar — South African Audio Tech" />
+    <meta
+      property="og:description"
+      content="Earjar is a South African audio tech company building plugins, VSTs and tools for producers, engineers and music enthusiasts. Bringing the funk back to music."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Earjar — South African Audio Tech" />
+    <meta
+      name="twitter:description"
+      content="Earjar is a South African audio tech company building plugins, VSTs and tools for producers, engineers and music enthusiasts. Bringing the funk back to music."
+    />
   </head>
   <body>
     <div id="root"></div>
