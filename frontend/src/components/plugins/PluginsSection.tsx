@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { CustomLoaders } from "../index.ts";
+import { CustomLoaders, CustomUI } from "../index.ts";
 
-export type Synth = {
+export type Plugin = {
     id: string;
     name: string;
     tagline: string;
@@ -10,7 +10,7 @@ export type Synth = {
     specs: { label: string; value: string }[];
     price: string;
 };
-export const synths: Synth[] = [
+export const plugins: Plugin[] = [
     // {
     //     id: "octave-synthesizer",
     //     name: "STOG 1",
@@ -27,7 +27,7 @@ export const synths: Synth[] = [
     //     price: "TBA"
     // },
 ];
-export const comingSoonSynths: Synth[] = [
+export const comingSoonPlugins: Plugin[] = [
     {
         id: "1",
         name: "STOG 1",
@@ -51,23 +51,31 @@ const reveal = {
     transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
 };
 
-const SynthViewer = () => {
+const PluginsSection = () => (
+    <section id="synths" className="pl-4 w-full flex flex-col scroll-mt-4 gap-8">
+        <motion.div {...reveal} className="flex flex-col gap-1">
+            <CustomUI.MainHeaderDark title="Plugins & Vst's" />
+        </motion.div>
+        <PluginListItems />
+    </section>
+);
+const PluginListItems = () => {
     return (
         <motion.div {...reveal} className="grid grid-cols-1 gap-8">
-            {synths.length > 0 && synths.map((synth: Synth) => (
+            {plugins.length > 0 && plugins.map((plugin: Plugin) => (
                 <section className="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <motion.div className={`md:col-span-2 flex flex-col gap-2 `}>
                         <span className="text-md font-light text-umnyama/55">
-                            <span className="text-md text-umnyama/60 font-bold">{synth.price}</span>
-                            <h2 className="text-md text-umnyama font-bold">{synth.name}</h2>
+                            <span className="text-md text-umnyama/60 font-bold">{plugin.price}</span>
+                            <h2 className="text-md text-umnyama font-bold">{plugin.name}</h2>
                         </span>
 
-                        <p className="text-xs text-umnyama/70">{synth.tagline}</p>
+                        <p className="text-xs text-umnyama/70">{plugin.tagline}</p>
 
-                        <p className="text-xs text-umnyama/70">{synth.description}</p>
+                        <p className="text-xs text-umnyama/70">{plugin.description}</p>
 
                         <dl className="grid grid-cols-2 gap-x-4 gap-y-3 pt-2">
-                            {synth.specs.map((spec) => (
+                            {plugin.specs.map((spec) => (
                                 <div key={spec.label} className="border-t border-umnyama/15 pt-2">
                                     <dt className="text-xs uppercase tracking-widest text-umnyama/50">{spec.label}</dt>
                                     <dd className="text-xs text-umnyama">{spec.value}</dd>
@@ -76,21 +84,21 @@ const SynthViewer = () => {
                         </dl>
                     </motion.div>
 
-                    <img src={synth.model} className="w-200 h-60 shadow-xs shadow-gray-600 rounded-lg" />
+                    <img src={plugin.model} className="w-200 h-60 shadow-xs shadow-gray-600 rounded-lg" />
 
                 </section>
             ))}
-            {comingSoonSynths.length > 0 && comingSoonSynths.map((synth: Synth) => (
+            {comingSoonPlugins.length > 0 && comingSoonPlugins.map((plugin: Plugin) => (
                 <section className="w-full flex flex-col md:flex-row items-center items-start md:items-center justify-between gap-4">
                     <motion.div className={`md:col-span-2 flex flex-col gap-2 `}>
                         <span className="text-md font-light text-umnyama/55">
-                            <h2 className="text-md text-umnyama font-bold">{synth.name}</h2>
+                            <h2 className="text-md text-umnyama font-bold">{plugin.name}</h2>
                         </span>
 
-                        <p className="text-xs text-umnyama/70">{synth.tagline}</p>
+                        <p className="text-xs text-umnyama/70">{plugin.tagline}</p>
 
                         <dl className="grid grid-cols-2 gap-x-4 gap-y-3 pt-2">
-                            {synth.specs.map((spec) => (
+                            {plugin.specs.map((spec) => (
                                 <div key={spec.label} className="border-t border-umnyama/15 pt-2">
                                     <dt className="text-xs uppercase tracking-widest text-umnyama/50">{spec.label}</dt>
                                     <dd className="text-xs text-umnyama">{spec.value}</dd>
@@ -105,5 +113,5 @@ const SynthViewer = () => {
             ))}
         </motion.div>
     )
-}
-export default SynthViewer
+};
+export default PluginsSection

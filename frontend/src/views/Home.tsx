@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { HeaderTools, Footer, CustomUI, SynthViewer } from "../components/index.ts";
+import { HeaderTools, Footer, CustomUI, PluginsSection } from "../components/index.ts";
 
 const reveal = {
     initial: { opacity: 0, y: 30 },
@@ -17,7 +17,7 @@ export default function Home() {
                 <AboutSection />
                 <div className="relative w-full flex flex-col items-start gap-4">
                     <CustomUI.MainHeader title="The Collection" />
-                    <SynthSection />
+                    <PluginsSection />
                 </div>
             </section>
 
@@ -47,11 +47,3 @@ const AboutSection = () => {
         </motion.div>
     )
 };
-const SynthSection = () => (
-    <section id="synths" className="pl-4 w-full flex flex-col scroll-mt-4 gap-8">
-        <motion.div {...reveal} className="flex flex-col gap-1">
-            <CustomUI.MainHeaderDark title="Plugins & Vst's" />
-        </motion.div>
-        <SynthViewer />
-    </section>
-);
