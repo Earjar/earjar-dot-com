@@ -2,21 +2,16 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { CustomUI } from "..";
-import type { SocialLink } from "../../types/socialTypes";
+import { ShoppingCart } from "lucide-react";
 
 const HeaderTools = () => {
     const navigate = useNavigate();
     const location = window.location.pathname;
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    const socials: SocialLink[] = [
-        { id: 1, label: "Github", linkTo: "https://github.com/Earjar", icon: "/images/github.png" },
-        { id: 2, label: "Linkedin", linkTo: "https://www.linkedin.com/company/144578070", icon: "/images/linkedin.png" },
-        { id: 2, label: "NPM", linkTo: "https://www.npmjs.com/~earjar", icon: "/images/npm.png" },
-    ];
-
     const links = [
-        { id: 1, label: "Home", action: () => navigate("/home"), active: location === "/home" }
+        { id: 1, label: "Home", action: () => navigate("/home"), active: location === "/home" },
+        { id: 2, label: "Shop", action: () => navigate("/shop"), active: location === "/shop" },
     ];
 
     return (
@@ -29,7 +24,6 @@ const HeaderTools = () => {
             >
                 {/* Top bar */}
                 <div className="w-full flex items-center justify-between">
-                    {/* logo */}
                     <div className="w-20 h-20 mr-0 md:mr-6">
                         <img src="/images/logo.png" className="w-full h-full" />
                     </div>
@@ -43,26 +37,17 @@ const HeaderTools = () => {
                                 onClick={item.action}
                             >
                                 {item.label}
-                                {item.active && ( <div className="w-full h-1 bg-lush"/>)}
+                                {item.active && (<div className="w-full h-1 bg-lush" />)}
                             </button>
                         ))}
                     </div>
-
+                    <div>
+                        <button className="flex items-center justify-center gap-2 px-2 py-1 rounded-md text-chalk bg-hazy">
+                            <ShoppingCart size={16} />
+                            Cart
+                        </button>
+                    </div>
                     <div className="flex items-center gap-2 md:gap-4">
-                        <ul className="flex items-center justify-start gap-2">
-                            {socials.map((portfolioLink: SocialLink) => (
-                                <li key={portfolioLink.id} className="hover:scale-105 transition-all duration-300">
-                                    <a
-                                        href={portfolioLink.linkTo}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <img src={portfolioLink.icon} className="w-5 h-5 md:w-7 md:h-6" alt="" />
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-
                         <button
                             className="md:hidden flex items-center p-2 -mr-2"
                             onClick={() => setMobileOpen(!mobileOpen)}

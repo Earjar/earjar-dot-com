@@ -6,7 +6,7 @@ export { default as HeaderTools } from "./navigation/HeaderTools.tsx";
 export { default as Footer } from "./navigation/Footer.tsx";
 
 // synths
-export { default as PluginsSection } from "./plugins/PluginsSection.tsx"
+export * as Plugins from "./plugins/Plugins.tsx"
 
 // custom
 export * as CustomUI from "./custom/CustomUI.tsx";
