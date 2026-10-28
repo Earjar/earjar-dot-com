@@ -1,5 +1,5 @@
 import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom';
-import { Home, Shop, Privacy, Terms } from "../views/index.ts";
+import { Home, Shop, Privacy, Terms, Checkout } from "../views/index.ts";
 
 export default function RouteProvider() {
     return (
@@ -7,6 +7,7 @@ export default function RouteProvider() {
             <Routes>
                 <Route path="/home" element={<Home />} />
                 <Route path="/shop" element={<Shop />} />
+                <Route path="/checkout" element={<Checkout />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/*" element={<Navigate to="/home" />} />

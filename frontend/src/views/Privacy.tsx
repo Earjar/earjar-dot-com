@@ -153,7 +153,7 @@ export default function Privacy() {
                     className="flex flex-col gap-2"
                 >
                     <span className="text-xs uppercase tracking-[0.3em] text-nguni">Legal</span>
-                    <CustomUI.MainHeaderDark title="Privacy Policy" />
+                    <CustomUI.MainHeader title="Privacy Policy" />
                     <CustomUI.NoInformation title={`Last updated: ${LEGAL_LAST_UPDATED}`} />
                 </motion.div>
 

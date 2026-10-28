@@ -3,13 +3,15 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import * as ShopTypes from "../types/shopTypes.ts";
 
 export const useShopState = create<ShopTypes.ShopProps>()(
-    persist (
-        (set, get) => ({
+    persist(
+        (set) => ({
             shopItems: [],
-            addShopItem: (payload: ShopTypes.ShopItem) => set(() => {
-                const currentItems = get().shopItems;
-                
-            }),
+            addShopItem: (payload: ShopTypes.ShopItem) => set((state) => ({
+                shopItems: [...state.shopItems, payload]
+            })),
+            removeShopItem: (payload: ShopTypes.ShopItem) => set((state) => ({
+                shopItems: state.shopItems.filter((item) => item.id !== payload.id)
+            })),
             clearShopItems: () => set(() => ({ shopItems: [] }))
         }),
         {

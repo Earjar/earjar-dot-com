@@ -147,7 +147,7 @@ export default function Terms() {
                     className="flex flex-col gap-2"
                 >
                     <span className="text-xs uppercase tracking-[0.3em] text-nguni">Legal</span>
-                    <CustomUI.MainHeaderDark title="Terms of Use" />
+                    <CustomUI.MainHeader title="Terms of Use" />
                     <CustomUI.NoInformation title={`Last updated: ${LEGAL_LAST_UPDATED}`} />
                 </motion.div>
 

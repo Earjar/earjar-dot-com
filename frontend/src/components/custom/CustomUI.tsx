@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, X } from "lucide-react";
-import { formatToLocalDateTime } from "../../utils/dateUtils";
+import { slugify } from "../../utils/stringUtils";
+import { CustomButtons } from "..";
 
 // headers
 interface MainHeaderProps {
@@ -11,68 +12,26 @@ interface MainHeaderProps {
 interface SubHeaderProps {
     title: string;
 };
-export const MainHeaderLight: React.FC<MainHeaderProps> = ({ title }) => (
-    <h1 className="text-lg md:text-2xl font-light text-bone">{title}</h1>
-);
-export const MainHeaderDark: React.FC<MainHeaderProps> = ({ title }) => (
-    <h1 className="text-lg md:text-2xl font-light text-umnyama">{title}</h1>
-);
 export const MainHeader: React.FC<MainHeaderProps> = ({ title }) => (
-    <h1 className="text-lg md:text-xl font-light text-nguni uppercase tracking-wide">{title}</h1>
-);
-export const GlitchedHeader: React.FC<MainHeaderProps> = ({ title, glitchedWord }) => (
-    <h1 className="text-2xl md:text-6xl font-light text-umnyama">
-        {title}{" "}
-        {glitchedWord && (
-            <span className="glitch-text" data-text={glitchedWord}>
-                {glitchedWord.split("").map((char, i) => (
-                    <span
-                        key={i}
-                        className="glitch-char"
-                        style={{ animationDelay: `${i * 0.05}s` }}
-                    >
-                        {char}
-                    </span>
-                ))}
-            </span>
-        )}
-    </h1>
+    <h1 className="text-lg md:text-2xl font-light text-umnyama">{title}</h1>
 );
 export const SubHeader: React.FC<SubHeaderProps> = ({ title }) => (
     <p className="text-[10px] md:text-sm font-light text-umnyama">{title}</p>
 );
 export const NoInformation: React.FC<SubHeaderProps> = ({ title }) => (
     <p className="text-[10px] md:text-sm font-light text-umnyama/60">{title}</p>
-)
+);
+
 // seperators
 export const DarkSeperator = () => (
     <div className="h-px w-full bg-gradient-to-r from-umnyama/15 via-umnyama/30 to-umnyama/15" />
-);
-export const LightSeperator = () => (
-    <div className="h-px w-full bg-gradient-to-r from-umnyama/15 via-umnyama/30 to-bone/15 my-2" />
 );
 export const FaintLightSeperator = () => (
     <div className="h-px w-full bg-gradient-to-r from-bone/20 via-bone/5 to-transparent" />
 );
 
 // legal
-/*
- * Inline links inside legal prose.
- *
- * index.css sets `a { text-decoration: none; font-weight: 500 }` and
- * `a:hover { font-weight: 600 }` as unlayered CSS after `@import "tailwindcss"`.
- * Unlayered declarations beat everything in Tailwind's utilities layer whatever
- * their specificity, so plain `underline` and `font-medium` here would simply
- * lose: the links would not be underlined, and the hover weight change would
- * reflow the paragraph mid-sentence. Hence the `!` overrides, and a weight
- * pinned on both states so the text cannot shift.
- */
-export const legalLinkClass =
-    "text-hazy underline! font-medium! decoration-umnyama/40 hover:decoration-umnyama";
-
-const slugify = (value: string) =>
-    value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-
+export const legalLinkClass = "text-hazy underline! font-medium! decoration-umnyama/40 hover:decoration-umnyama";
 interface LegalClauseProps {
     index: number;
     heading: string;
@@ -80,12 +39,6 @@ interface LegalClauseProps {
     bullets?: string[];
     children?: React.ReactNode;
 };
-/*
- * One numbered clause of a policy or terms page. Clauses are numbered and given
- * an id so they can be cited and linked to directly, e.g. /terms#governing-law.
- * `children` carries anything needing markup, such as an inline link, which a
- * plain `body` string cannot express.
- */
 export const LegalClause: React.FC<LegalClauseProps> = ({ index, heading, body, bullets, children }) => (
     <div id={slugify(heading)} className="flex flex-col gap-2 scroll-mt-24">
         <h2 className="text-base font-bold text-umnyama">{index}. {heading}</h2>
@@ -108,24 +61,6 @@ interface InputProps {
     value: string;
     placeholder?: string;
 };
-interface FileInputProps {
-    fileRef?: any;
-    disabled?: boolean;
-    onChange: (payload: any) => void
-    accept?: string;
-};
-export const TextAreaInput: React.FC<InputProps> = ({ disabled = false, onChange, value, placeholder }) => {
-    return (
-        <textarea
-            className="border rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black"
-            disabled={disabled}
-            onChange={onChange}
-            value={value}
-            placeholder={placeholder}
-            rows={10}
-        />
-    );
-};
 export const TextInput: React.FC<InputProps> = ({ disabled = false, onChange, value, placeholder }) => {
     return (
         <input
@@ -138,134 +73,90 @@ export const TextInput: React.FC<InputProps> = ({ disabled = false, onChange, va
         />
     );
 };
-export const ReadOnlyTextInput: React.FC<InputProps> = ({ disabled = false, onChange, value, placeholder }) => {
-    return (
-        <input
-            readOnly
-            type="text"
-            className="border rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black text-gray-600 bg-gray-50"
-            disabled={disabled}
-            onChange={onChange}
-            value={value}
-            placeholder={placeholder}
-        />
-    );
-};
-export const FileInput: React.FC<FileInputProps> = ({ disabled = false, onChange, accept }) => {
-    return (
-        <input
-            disabled={disabled}
-            type="file"
-            accept={accept}
-            className="text-sm"
-            onChange={onChange}
-        />
-    );
-};
-export const MultiFileInput: React.FC<FileInputProps> = ({ disabled = false, fileRef, onChange, accept }) => {
-    return (
-        <input
-            disabled={disabled}
-            ref={fileRef}
-            type="file"
-            multiple
-            className="hidden"
-            accept={accept}
-            onChange={onChange}
-        />
-    );
-};
 
 // cards
 interface CardProps {
-    /*
-        the action can be anything that can be triggered
-        floatingTags are used for the songCard as a cool tag element on the cover image
-    */
+    price?: string;
+    name: string;
+    tagline: string;
+    description?: string;
+    tags?: any;
+    cover: any;
+    warn?: boolean;
+    actionTitle: string;
     action: any;
-    itemTitle: string;
-    itemContent?: string;
-    itemImage?: string | null;
-    itemLink?: string | null;
-    itemTags?: string[];
-    floatingTags?: React.ReactNode;
-    itemDate?: any;
 };
-export const Tags: React.FC<{ tags: string[] }> = ({ tags }) => {
-    if (!tags) return null;
+export const Tags: React.FC<{ label: string, value: string }> = ({ label, value }) => {
     return (
-        <div className="flex items-center justify-start gap-1">
-            {tags.map((tag: string) => (
-                <span key={tag} className="text-xs text-hazy">#{tag}</span>
-            ))}
-        </div>
+        <span>
+            <dt className="text-xs uppercase tracking-widest text-umnyama/50">{label}</dt>
+            <dd className="text-xs text-umnyama">{value}</dd>
+        </span>
     );
 };
-export const LargeCard: React.FC<CardProps> = ({ action, itemTitle, itemContent, itemLink, itemTags, itemDate }) => {
+export const LargeCard: React.FC<CardProps> = ({ price, name, tagline, description, tags, cover, actionTitle, action }) => {
     return (
-        <li
-            className="cursor-pointer flex flex-col items-start
-               w-full h-auto
-               px-3 py-2 md:px-4 gap-2
-               border-r border-t border-umnyama text-khala
-               hover:scale-[1.02] transform-gpu
-               duration-300
-            "
-            onClick={action}
-        >
-            <span className="text-umnyama md:text-lg font-bold">
-                {itemTitle}
-            </span>
+        <section className="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <motion.div className={`md:col-span-2 flex flex-col gap-2 `}>
+                <span className="text-md font-light text-umnyama/55">
+                    <span className="text-md text-umnyama/60 font-bold">{price}</span>
+                    <h2 className="text-md text-umnyama font-bold">{name}</h2>
+                </span>
 
-            <div className="flex-1">
-                <p className="text-umnyama/80 text-xs md:text-sm">
-                    {itemContent}
-                </p>
-            </div>
+                <p className="text-xs text-umnyama/70">{tagline}</p>
 
-            {itemDate && <span className="text-xs text-oled">{itemDate}</span>}
+                <p className="text-xs text-umnyama/70">{description}</p>
 
-            {itemLink && <a href={itemLink} className="flex items-center gap-2 text-xs text-hazy" target="_blank" rel="noopener noreferrer">Link to</a>}
+                <dl className="">
+                    {tags}
+                </dl>
+                <CustomButtons.Safe
+                    disabled={false}
+                    onClick={action}
+                    title={actionTitle}
+                    text={actionTitle}
+                />
+            </motion.div>
+            {cover}
 
-            {itemTags && <Tags tags={itemTags} />}
-        </li>
+        </section>
     )
 };
-export const SmallCard: React.FC<CardProps> = ({ action, itemTitle, itemContent, itemImage, itemTags, floatingTags, itemDate }) => {
+export const SmallCard: React.FC<CardProps> = ({ price, name, tagline, description, tags, cover, warn, actionTitle, action }) => {
     return (
-        <li
-            className="cursor-pointer flex flex-col items-start
-               w-full h-auto
-               px-3 py-2 md:px-4 gap-2
-               border-r border-t border-umnyama text-khala
-               hover:scale-[1.02] transform-gpu
-               duration-300 relative
-            "
-            onClick={action}
-        >
-            {floatingTags}
-            <img
-                src={itemImage ?? "/images/placeholder.png"}
-                alt="Cover preview"
-                className="mt-2 h-40 w-full object-cover"
-            />
-            <span className="text-base md:text-xl">
-                {itemTitle.length > 20
-                    ? itemTitle.slice(0, 20) + "..."
-                    : itemTitle}
-            </span>
+        <section className="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <motion.div className={`md:col-span-2 flex flex-col gap-2 `}>
+                <span className="text-md font-light text-umnyama/55">
+                    <span className="text-md text-umnyama/60 font-bold">{price}</span>
+                    <h2 className="text-md text-umnyama font-bold">{name}</h2>
+                </span>
 
-            {itemContent && (
-                <p className="text-umnyama/60 text-sm md:text-md">
-                    {itemContent.split(" ").slice(0, 10).join(" ")}
-                    {itemContent.split(" ").length > 10 && "..."}
-                </p>
-            )}
+                <p className="text-xs text-umnyama/70">{tagline}</p>
 
-            {itemDate && <span className="text-xs text-ambers">{formatToLocalDateTime(itemDate)}</span>}
+                <p className="text-xs text-umnyama/70">{description}</p>
 
-            {itemTags && <Tags tags={itemTags} />}
-        </li>
+                <dl>
+                    {tags}
+                </dl>
+                {warn ? (
+                    <CustomButtons.Warn
+                        disabled={false}
+                        onClick={action}
+                        title={actionTitle}
+                        text={actionTitle}
+                    />
+                ) : (
+                    <CustomButtons.Safe
+                        disabled={false}
+                        onClick={action}
+                        title={actionTitle}
+                        text={actionTitle}
+                    />
+                )}
+            </motion.div>
+            {cover}
+
+        </section>
     )
 };
 
@@ -276,7 +167,7 @@ interface PopupModalProps {
     setVisible: (state: boolean) => void;
     children: any;
 };
-export const PopupModal: React.FC<PopupModalProps> = ({ title, isVisible, setVisible, children }) => {
+export const PopupModalC: React.FC<PopupModalProps> = ({ title, isVisible, setVisible, children }) => {
     if (!isVisible) return null;
 
     return (
@@ -284,20 +175,61 @@ export const PopupModal: React.FC<PopupModalProps> = ({ title, isVisible, setVis
             <div className="relative w-full max-w-2xl bg-bone p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-200">
                 <div className="flex justify-between items-center">
                     <h3 className="text-lg font-semibold text-umnyama">{title}</h3>
-                    <button
+
+                    <CustomButtons.Default
+                        disabled={false}
                         onClick={() => setVisible(false)}
-                        className="text-umnyama p-1 rounded-lg hover:bg-gray-100 transition-colors"
-                        aria-label="Close modal"
-                    >
-                        <X size={20} />
-                    </button>
+                        title="Close modal"
+                        icon={<X size={16} />}
+                    />
                 </div>
-                <section>
+                <section className="">
                     {children}
                 </section>
             </div>
         </div>
     );
+};
+export const PopupModalTR: React.FC<PopupModalProps> = ({ title, isVisible, setVisible, children }) => {
+    return (
+        <AnimatePresence>
+            {isVisible && (
+                <>
+                    <div
+                        className="fixed inset-0 z-40"
+                        onClick={() => setVisible(false)}
+                        aria-hidden="true"
+                    />
+                    <motion.div
+                        key="popup-tr-panel"
+                        role="dialog"
+                        aria-label={title}
+                        initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="fixed top-20 right- md:top-24 md:right-0 z-50
+                                   w-[calc(100vw-2rem)] max-w-sm max-h-[70vh] h-60
+                                   flex flex-col origin-top-right overflow-hidden
+                                   bg-chalk border border-khala/50 shadow-xl rounded-l-md"
+                    >
+                        <div className="flex justify-between items-center px-4 py-3 border-b border-khala/20">
+                            <h3 className="text-lg font-semibold text-umnyama">{title}</h3>
+                            <CustomButtons.Default
+                                disabled={false}
+                                onClick={() => setVisible(false)}
+                                title="Close modal"
+                                icon={<X size={16} />}
+                            />
+                        </div>
+                        <section className="px-4 py-3 overflow-y-auto">
+                            {children}
+                        </section>
+                    </motion.div>
+                </>
+            )}
+        </AnimatePresence>
+    )
 };
 
 // dropdowns
