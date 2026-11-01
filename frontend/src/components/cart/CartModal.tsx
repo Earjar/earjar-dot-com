@@ -3,6 +3,7 @@ import { CustomUI, CustomButtons } from "../index.ts";
 import { ShoppingCart, Trash } from "lucide-react";
 import { useShopState } from "../../store/zustStore.ts";
 import { useNavigate } from "react-router-dom";
+import { formatZAR, sumPrices } from "../../utils/priceUtils.ts";
 
 const CartModal = () => {
     const navigate = useNavigate();
@@ -15,7 +16,10 @@ const CartModal = () => {
         return currentShopItems;
     }, [shopItems]);
 
+    const cartTotal = useMemo(() => sumPrices(visibleShopItems), [visibleShopItems]);
+
     const goToCheckout = () => {
+        setCartOpen(false);
         navigate("/checkout");
     };
     
@@ -29,8 +33,8 @@ const CartModal = () => {
                 icon={<ShoppingCart size={16} />}
             />
             {visibleShopItems.length > 0 && (
-                <div className="absolute top-0 right-0 bg-lush rounded-full h-3 w-3 p-1 flex items-center justify-center animate-pulse">
-                    <span className="text-[10px] text-chalk">{visibleShopItems.length}</span>
+                <div className="absolute -top-1 -right-1 bg-lush rounded-full h-4 min-w-4 px-1 flex items-center justify-center">
+                    <span className="text-[10px] font-bold leading-none text-chalk">{visibleShopItems.length}</span>
                 </div>
             )}
             <CustomUI.PopupModalTR title="Current Order" isVisible={cartOpen} setVisible={setCartOpen}>
@@ -41,7 +45,7 @@ const CartModal = () => {
 
                         <ul className="flex-1 w-full flex flex-col gap-2">
                             {visibleShopItems.length > 0 && visibleShopItems.map((item) => (
-                                <li className="flex items-start justify-between gap-2 text-umnyama text-xs">
+                                <li key={item.id} className="flex items-start justify-between gap-2 text-umnyama text-xs">
                                     <div className="flex items-start justify-start gap-2">
                                         <img src={item.cover} className="w-15 h-15 shadow-xs shadow-gray-600 rounded-lg" />
                                         <div className="grid grid-cols-1 gap-1">
@@ -51,7 +55,7 @@ const CartModal = () => {
                                     </div>
 
                                     <div className="flex flex-col items-end gap-2">
-                                        <span>{item.price}</span>
+                                        <span>{formatZAR(item.price)}</span>
                                         <CustomButtons.Warn
                                             disabled={false}
                                             onClick={() => removeShopItem(item)}
@@ -63,9 +67,16 @@ const CartModal = () => {
                             ))}
                         </ul>
 
+                        {visibleShopItems.length > 0 && (
+                            <div className="w-full flex items-center justify-between border-t border-umnyama/15 pt-2 text-sm text-umnyama">
+                                <span>Total</span>
+                                <span className="font-bold">{formatZAR(cartTotal)}</span>
+                            </div>
+                        )}
+
                         <div className="">
                             <CustomButtons.Checkout
-                                disabled={false}
+                                disabled={visibleShopItems.length === 0}
                                 onClick={goToCheckout}
                                 title="Checkout"
                                 text="Checkout"

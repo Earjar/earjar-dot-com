@@ -3,3 +3,6 @@ export { default as Shop } from "./Shop.tsx";
 export { default as Checkout } from "./Checkout.tsx";
 export { default as Privacy } from "./Privacy.tsx";
 export { default as Terms } from "./Terms.tsx";
+
+export { default as CheckoutSuccess } from "./CheckoutSuccess.tsx";
+export { default as CheckoutCancelled } from "./CheckoutCancelled.tsx";

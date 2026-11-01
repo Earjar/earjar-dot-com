@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { CustomUI } from "../index.ts";
 import { useShopState } from "../../store/zustStore.ts";
-import { type Plugin, plugins } from "../../types/shopTypes.ts";
+import { type Plugin, type ShopItem, plugins, toShopItem } from "../../types/shopTypes.ts";
+import { formatZAR } from "../../utils/priceUtils.ts";
 
 const reveal = {
     initial: { opacity: 0, y: 50 },
@@ -30,13 +31,14 @@ const PluginsShopSection = () => {
 export default PluginsShopSection;
 
 interface PluginShopListProps
-{ addShopItem: (payload: any) => void, removeShopItem: (payload: any) => void, isAddedToCart: (payload: any) => boolean };
+{ addShopItem: (payload: ShopItem) => void, removeShopItem: (payload: ShopItem) => void, isAddedToCart: (id: string) => boolean };
 
 export const PluginShopListItems: React.FC<PluginShopListProps> = ({ addShopItem, removeShopItem, isAddedToCart }) => (
     <motion.div {...reveal} className="grid grid-cols-1 gap-8">
         {plugins.length > 0 && plugins.map((plugin: Plugin) => (
             <CustomUI.SmallCard
-                price={plugin.price}
+                key={plugin.id}
+                price={plugin.price === null ? "License Required" : formatZAR(plugin.price)}
                 name={plugin.name}
                 tagline={plugin.tagline}
                 description={plugin.description}
@@ -53,8 +55,10 @@ export const PluginShopListItems: React.FC<PluginShopListProps> = ({ addShopItem
                     </section>
                 }
                 warn={isAddedToCart(plugin.id)}
-                actionTitle={!isAddedToCart(plugin.id) ? "Add to cart" : "Remove from cart"}
-                action={!isAddedToCart(plugin.id) ? () => addShopItem(plugin) : () => removeShopItem(plugin)}
+                // license-only plugins can't be bought through the cart
+                actionDisabled={plugin.price === null}
+                actionTitle={plugin.price === null ? "License required" : !isAddedToCart(plugin.id) ? "Add to cart" : "Remove from cart"}
+                action={!isAddedToCart(plugin.id) ? () => addShopItem(toShopItem(plugin)) : () => removeShopItem(toShopItem(plugin))}
                 cover={
                     <img src={plugin.cover} className="w-100 h-60 shadow-xs shadow-gray-600 rounded-lg" />
                 }

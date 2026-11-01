@@ -12,13 +12,15 @@ export type Plugin = {
     description: string;
     cover?: string;
     specs: Specs[];
-    price: string;
+    // price in cents (ZAR), null when the plugin needs a license instead of a sale
+    price: number | null;
     available: boolean;
 };
 
 export type ShopItem = {
-    id: string | number;
+    id: string;
     name: string;
+    // price in cents (ZAR)
     price: number;
     specs: Specs[];
     cover: string;
@@ -32,6 +34,14 @@ export interface ShopProps
     clearShopItems: () => void;
 };
 
+export const toShopItem = (plugin: Plugin): ShopItem => ({
+    id: plugin.id,
+    name: plugin.name,
+    price: plugin.price ?? 0,
+    specs: plugin.specs,
+    cover: plugin.cover ?? "/images/placeholder.png"
+});
+
 // dummy data
 export const plugins: Plugin[] = [
     {
@@ -44,7 +54,7 @@ export const plugins: Plugin[] = [
         specs: [
             { type: "Synthesizer", voices: "8 voices", presets: "50+", synthesis: "Digital" }
         ],
-        price: "License Required",
+        price: null,
         available: false
     },
     {
@@ -57,7 +67,7 @@ export const plugins: Plugin[] = [
         specs: [
             { type: "Effects", voices: "8 voices", presets: "150+", synthesis: "Digital" }
         ],
-        price: "R200.00",
+        price: 20000,
         available: false
     },
 ];

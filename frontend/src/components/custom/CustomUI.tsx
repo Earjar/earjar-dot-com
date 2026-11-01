@@ -56,15 +56,20 @@ export const LegalClause: React.FC<LegalClauseProps> = ({ index, heading, body, 
 
 // inputs
 interface InputProps {
+    id?: string;
+    type?: "text" | "email";
+    autoComplete?: string;
     disabled?: boolean;
     onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     value: string;
     placeholder?: string;
 };
-export const TextInput: React.FC<InputProps> = ({ disabled = false, onChange, value, placeholder }) => {
+export const TextInput: React.FC<InputProps> = ({ id, type = "text", autoComplete, disabled = false, onChange, value, placeholder }) => {
     return (
         <input
-            type="text"
+            id={id}
+            type={type}
+            autoComplete={autoComplete}
             className="border rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black"
             disabled={disabled}
             onChange={onChange}
@@ -83,6 +88,7 @@ interface CardProps {
     tags?: any;
     cover: any;
     warn?: boolean;
+    actionDisabled?: boolean;
     actionTitle: string;
     action: any;
 };
@@ -122,7 +128,7 @@ export const LargeCard: React.FC<CardProps> = ({ price, name, tagline, descripti
         </section>
     )
 };
-export const SmallCard: React.FC<CardProps> = ({ price, name, tagline, description, tags, cover, warn, actionTitle, action }) => {
+export const SmallCard: React.FC<CardProps> = ({ price, name, tagline, description, tags, cover, warn, actionDisabled = false, actionTitle, action }) => {
     return (
         <section className="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <motion.div className={`md:col-span-2 flex flex-col gap-2 `}>
@@ -147,7 +153,7 @@ export const SmallCard: React.FC<CardProps> = ({ price, name, tagline, descripti
                     />
                 ) : (
                     <CustomButtons.Safe
-                        disabled={false}
+                        disabled={actionDisabled}
                         onClick={action}
                         title={actionTitle}
                         text={actionTitle}
