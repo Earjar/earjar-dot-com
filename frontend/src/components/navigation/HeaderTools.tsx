@@ -2,15 +2,19 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { CustomUI, CustomButtons, CartModal } from "..";
+import { SHOW_WIP_PAGES } from "../../constants/features.ts";
 
 const HeaderTools = () => {
     const navigate = useNavigate();
     const location = window.location.pathname;
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    const links = [
+    // Home and Shop are hidden while they're still being built.
+    const links = SHOW_WIP_PAGES ? [
         { id: 1, label: "Home", action: () => navigate("/home"), active: location === "/home" },
         { id: 2, label: "Shop", action: () => navigate("/shop"), active: location === "/shop" }
+    ] : [
+        { id: 1, label: "Home", action: () => navigate("/"), active: location === "/" }
     ];
 
     return (
@@ -40,7 +44,7 @@ const HeaderTools = () => {
                         ))}
                     </div>
 
-                    <CartModal />
+                    {SHOW_WIP_PAGES && <CartModal />}
 
                     <div className="flex items-center gap-2 md:gap-4">
                         <CustomButtons.MobileMenu

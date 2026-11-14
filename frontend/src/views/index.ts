@@ -6,3 +6,4 @@ export { default as Terms } from "./Terms.tsx";
 
 export { default as CheckoutSuccess } from "./CheckoutSuccess.tsx";
 export { default as CheckoutCancelled } from "./CheckoutCancelled.tsx";
+export { default as Landing } from "./Landing.tsx";

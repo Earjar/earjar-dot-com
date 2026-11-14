@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CustomUI } from "..";
 import type { SocialLink } from "../../types/socialTypes";
 import { COMPANY } from "../../constants/company.ts";
+import { SHOW_WIP_PAGES } from "../../constants/features.ts";
 
 const Footer = () => {
     const year = new Date().getFullYear();
@@ -29,8 +30,8 @@ const Footer = () => {
                     {/* explore */}
                     <nav className="flex flex-col gap-3" aria-label="Footer">
                         <h2 className={headingClass}>Explore</h2>
-                        <Link to="/home" className={linkClass}>Home</Link>
-                        <a href="#synths" className={linkClass}>Synths &amp; drum machines</a>
+                        <Link to={SHOW_WIP_PAGES ? "/home" : "/"} className={linkClass}>Home</Link>
+                        {SHOW_WIP_PAGES && <a href="#synths" className={linkClass}>Synths &amp; drum machines</a>}
                     </nav>
 
                     {/* connect */}

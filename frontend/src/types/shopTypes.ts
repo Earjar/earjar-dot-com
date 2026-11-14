@@ -54,20 +54,20 @@ export const plugins: Plugin[] = [
         specs: [
             { type: "Synthesizer", voices: "8 voices", presets: "50+", synthesis: "Digital" }
         ],
-        price: null,
+        price: 0, // the last 2 digits are decimals, e.g 100 -> R1.00
         available: false
     },
-    {
-        id: "multi-effects-pack",
-        name: "Multi Effects Pack",
-        tagline: "A handful of effects plugins for producers.",
-        description:
-            "This pack contains an EQ, Reverb, Delay and Compressor.",
-        cover: "/images/placeholder.png", // /models/octave-synth.png
-        specs: [
-            { type: "Effects", voices: "8 voices", presets: "150+", synthesis: "Digital" }
-        ],
-        price: 20000,
-        available: false
-    },
+    // {
+    //     id: "multi-effects-pack",
+    //     name: "Multi Effects Pack",
+    //     tagline: "A handful of effects plugins for producers.",
+    //     description:
+    //         "This pack contains an EQ, Reverb, Delay and Compressor.",
+    //     cover: "/images/placeholder.png", // /models/octave-synth.png
+    //     specs: [
+    //         { type: "Effects", voices: "8 voices", presets: "150+", synthesis: "Digital" }
+    //     ],
+    //     price: 20000,
+    //     available: false
+    // },
 ];

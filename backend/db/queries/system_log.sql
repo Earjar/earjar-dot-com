@@ -1,0 +1,4 @@
+USE earjar_db;
+CREATE TABLE IF NOT EXISTS system_log (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY
+)
