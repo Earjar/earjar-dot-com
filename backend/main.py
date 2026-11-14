@@ -5,7 +5,7 @@ from routes.payment_routes import payment_route
 from routes.health import health_route
 from dotenv import load_dotenv
 from classes.logger import CustomLogger
-import os, uvicorn, aiomysql
+import os, ssl, uvicorn, asyncpg
 
 print(f"Railway injected PORT={os.getenv('PORT')}", flush=True)
 
@@ -18,24 +18,38 @@ DB_NAME = os.getenv("DB_NAME")
 DB_USERNAME = os.getenv("DB_USERNAME")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
-DB_PORT = int(os.getenv("DB_PORT", 4000))
+DB_PORT = int(os.getenv("DB_PORT", 5432))
+
+class TiDBConnection(asyncpg.Connection):
+    """
+    asyncpg resets each connection before returning it to the pool, and part of that
+    reset is `CLOSE ALL`, which TiDB's PostgreSQL layer rejects with
+    FeatureNotSupportedError. Every other reset statement works, so keep those.
+    """
+    def get_reset_query(self) -> str:
+        return "\n".join(
+            line for line in super().get_reset_query().splitlines()
+            if line.strip() != "CLOSE ALL;"
+        )
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    db_pool: aiomysql.Pool | None = None
-    
+    db_pool: asyncpg.Pool | None = None
+
     try:
         custom_logger.info(f"Connecting to DB at {DB_HOST}:{DB_PORT} ...")
-        db_pool = await aiomysql.create_pool(
+        db_pool = await asyncpg.create_pool(
             user=DB_USERNAME,
             password=DB_PASSWORD,
-            db=DB_NAME,
+            database=DB_NAME,
             host=DB_HOST,
             port=DB_PORT,
-            minsize=1,
-            maxsize=5,
-            autocommit=True,   # recommended for TiDB
-            ssl=True           # true for ssl context if using TiDB Cloud
+            min_size=1,
+            max_size=5,
+            # TiDB Cloud requires TLS; a default context also verifies the server's certificate.
+            # asyncpg autocommits any statement run outside an explicit transaction.
+            ssl=ssl.create_default_context(),
+            connection_class=TiDBConnection,
         )
         custom_logger.info("DB pool created successfully.")
         app.state.db_pool = db_pool
@@ -47,8 +61,7 @@ async def lifespan(app: FastAPI):
     
     finally:
         if db_pool:
-            db_pool.close()
-            await db_pool.wait_closed()
+            await db_pool.close()
 
 app = FastAPI(title="Earjar", lifespan=lifespan)
 

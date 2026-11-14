@@ -1,4 +1,4 @@
-USE earjar_db;
+-- PostgreSQL: there's no USE; the database is chosen by DB_NAME when connecting.
 CREATE TABLE IF NOT EXISTS system_log (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY
-)
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+);
