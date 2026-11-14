@@ -1,0 +1,69 @@
+# ==========================================
+# Environment Variables (Root, Frontend, Backend)
+# ==========================================
+.env
+.env.*
+*.env
+!.env.example
+!.env.template
+
+# ==========================================
+# React / TypeScript / Node.js
+# ==========================================
+node_modules/
+dist/
+build/
+.vite/
+*.tsbuildinfo
+
+# Package manager logs & caches
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+.eslintcache
+
+# ==========================================
+# Python / FastAPI
+# ==========================================
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Distribution / packaging
+*.egg-info/
+.installed.cfg
+*.egg
+.Python
+pip-log.txt
+
+# Testing & type-checking caches
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Local databases (e.g., SQLite dev files)
+*.db
+*.sqlite
+*.sqlite3
+
+# ==========================================
+# IDEs & Operating Systems
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
